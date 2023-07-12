@@ -1,8 +1,30 @@
 import Case from "../components/Case";
 import reactLogo from "../assets/react.svg";
-import reactLogos from "../assets/logo.png";
-import { PasswordInput, Text, Group, TextInput } from "@mantine/core";
-export default function Login() {
+import { PasswordInput, Text, Group, TextInput, Button } from "@mantine/core";
+import AuthService from '../services/auth.services';
+import { useNavigate } from "react-router-dom";
+
+
+export default function Login (){
+  const navigate = useNavigate();
+  const handleSubmit = (event:any)=>{
+    // Prevent page reload
+    event.preventDefault();
+    const username = event.target.username.value;
+    const password = event.target.password.value;
+    console.log("username", username)
+    console.log("value", password)
+
+    AuthService.login(username, password).then(
+      (e) => {
+        console.log("Login : ",e);
+        navigate("/");
+      },
+      error => {
+        console.log("error", error)
+      }
+    );
+  };
   return (
     <Case>
       <section className="h-screen">
@@ -17,24 +39,24 @@ export default function Login() {
                 />
               </div>
 
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                <Group position="apart" mb={5}>
-                  <Text
-                    component="label"
-                    htmlFor="username"
-                    size="sm"
-                    weight={500}
-                  >
-                    Username
-                  </Text>
-                </Group>
-                <TextInput
-                  id="username"
-                  placeholder="Username"
-                  required
-                  autoComplete="nope"
-                />
+                  <Group position="apart" mb={5}>
+                    <Text
+                      component="label"
+                      htmlFor="username"
+                      size="sm"
+                      weight={500}
+                    >
+                      Username
+                    </Text>
+                  </Group>
+                  <TextInput
+                    id="username"
+                    placeholder="Username"
+                    required
+                    autoComplete="nope"
+                  />
                 </div>
                 <div className="mb-3">
                   <Group position="apart" mb={5}>
@@ -47,18 +69,18 @@ export default function Login() {
                       Password
                     </Text>
                   </Group>
-                  <PasswordInput placeholder="Password" id="password" />
+                  <PasswordInput placeholder="Password" id="password" required />
                 </div>
 
                 <div className="grid justify-items-end text-center lg:text-left">
-                  <button
-                    type="button"
+                  <Button
+                  type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     data-te-ripple-init
                     data-te-ripple-color="light"
                   >
                     Login
-                  </button>
+                  </Button>
                 </div>
               </form>
             </div>

@@ -1,6 +1,7 @@
 import Case from "../components/Case";
 import { useNavigate } from "react-router-dom";
 import AuthService from '../services/auth.services';
+import Navbar from "../components/Navbar";
 export default function Home() {
   const navigate = useNavigate();
   const handleSubmit = async (event:any)=>{
@@ -16,6 +17,7 @@ export default function Home() {
   };
   return (
     <Case>
+      <Navbar/>
       <div className="w-full max-w-lg">
         <h4 className="text-2xl">Hello React</h4>
         <p className="text-lg leading-relaxed text-gray-400">

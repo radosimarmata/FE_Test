@@ -8,9 +8,9 @@ class AuthService {
     return axios
       .post(API_URL + "login", {
         username,
-        password
+        password,
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.status) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
@@ -20,20 +20,21 @@ class AuthService {
   }
 
   logout() {
-    const config= {
-      headers : authHeader()
-    }
+    const config = {
+      headers: authHeader(),
+    };
     const bodyParameters = {
-      key: "value"
-   };
-    return axios.post(API_URL + "logout", bodyParameters, config)
-    .then(response => {
-      if(response.data.status){
-        localStorage.removeItem("user");
-      }
+      key: "value",
+    };
+    return axios
+      .post(API_URL + "logout", bodyParameters, config)
+      .then((response) => {
+        if (response.data.status) {
+          localStorage.removeItem("user");
+        }
 
-      return response.data;
-    })
+        return response.data;
+      });
   }
 
   getCurrentUser() {

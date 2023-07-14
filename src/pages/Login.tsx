@@ -1,17 +1,16 @@
 import Case from "../components/Case";
-import { useState } from 'react';
+import { useState } from "react";
 import reactLogo from "../assets/react.svg";
 import { PasswordInput, Text, Group, TextInput, Button } from "@mantine/core";
-import AuthService from '../services/auth.services';
+import AuthService from "../services/auth.services";
 import { useNavigate } from "react-router-dom";
 
-
-export default function Login (){
+export default function Login() {
   const navigate = useNavigate();
-  const [username, setName] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setName] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = async (event:any)=>{
+  const handleSubmit = async (event: any) => {
     // Prevent page reload
     event.preventDefault();
 
@@ -19,9 +18,9 @@ export default function Login (){
       () => {
         navigate("/");
       },
-      error => {
-        alert(error.response.data.message)
-      }
+      (error) => {
+        alert(error.response.data.message);
+      },
     );
   };
   return (
@@ -38,7 +37,7 @@ export default function Login (){
                 />
               </div>
 
-              <form onSubmit={(e)=>handleSubmit(e)}>
+              <form onSubmit={(e) => handleSubmit(e)}>
                 <div className="mb-3">
                   <Group position="apart" mb={5}>
                     <Text
@@ -56,7 +55,7 @@ export default function Login (){
                     required
                     autoComplete="nope"
                     value={username}
-                    onChange={(e)=> setName(e.target.value)}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div className="mb-3">
@@ -70,12 +69,18 @@ export default function Login (){
                       Password
                     </Text>
                   </Group>
-                  <PasswordInput placeholder="Password" id="password" value={password} onChange={(e)=> setPassword(e.target.value)} required />
+                  <PasswordInput
+                    placeholder="Password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
                 </div>
 
                 <div className="grid justify-items-end text-center lg:text-left">
                   <Button
-                  type="submit"
+                    type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     data-te-ripple-init
                     data-te-ripple-color="light"

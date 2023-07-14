@@ -1,5 +1,19 @@
 import Case from "../components/Case";
+import { useNavigate } from "react-router-dom";
+import AuthService from '../services/auth.services';
 export default function Home() {
+  const navigate = useNavigate();
+  const handleSubmit = async (event:any)=>{
+    event.preventDefault();
+    AuthService.logout().then(
+      () => {
+        navigate("/login");
+      },
+      error => {
+        console.log(error)
+      }
+    );
+  };
   return (
     <Case>
       <div className="w-full max-w-lg">
@@ -7,6 +21,9 @@ export default function Home() {
         <p className="text-lg leading-relaxed text-gray-400">
           A JavaScript library for building user interfaces
         </p>
+        <button onClick={(e)=> handleSubmit(e)}>
+          Logout
+        </button>
       </div>
     </Case>
   );

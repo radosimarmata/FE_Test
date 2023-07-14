@@ -1,4 +1,5 @@
 import Case from "../components/Case";
+import { useState } from 'react';
 import reactLogo from "../assets/react.svg";
 import { PasswordInput, Text, Group, TextInput, Button } from "@mantine/core";
 import AuthService from '../services/auth.services';
@@ -7,21 +8,19 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login (){
   const navigate = useNavigate();
-  const handleSubmit = (event:any)=>{
+  const [username, setName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (event:any)=>{
     // Prevent page reload
     event.preventDefault();
-    const username = event.target.username.value;
-    const password = event.target.password.value;
-    console.log("username", username)
-    console.log("value", password)
 
     AuthService.login(username, password).then(
-      (e) => {
-        console.log("Login : ",e);
+      () => {
         navigate("/");
       },
       error => {
-        console.log("error", error)
+        alert(error.response.data.message)
       }
     );
   };
@@ -39,7 +38,7 @@ export default function Login (){
                 />
               </div>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={(e)=>handleSubmit(e)}>
                 <div className="mb-3">
                   <Group position="apart" mb={5}>
                     <Text
@@ -56,6 +55,8 @@ export default function Login (){
                     placeholder="Username"
                     required
                     autoComplete="nope"
+                    value={username}
+                    onChange={(e)=> setName(e.target.value)}
                   />
                 </div>
                 <div className="mb-3">
@@ -69,7 +70,7 @@ export default function Login (){
                       Password
                     </Text>
                   </Group>
-                  <PasswordInput placeholder="Password" id="password" required />
+                  <PasswordInput placeholder="Password" id="password" value={password} onChange={(e)=> setPassword(e.target.value)} required />
                 </div>
 
                 <div className="grid justify-items-end text-center lg:text-left">

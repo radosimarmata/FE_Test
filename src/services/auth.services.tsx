@@ -1,4 +1,5 @@
 import axios from "axios";
+import authHeader from "../services/auth-header.services";
 
 const API_URL = "http://34.101.145.49:8004/api/";
 
@@ -10,7 +11,7 @@ class AuthService {
         password
       })
       .then(response => {
-        if (response.data.accessToken) {
+        if (response.data.status) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
 
@@ -19,7 +20,13 @@ class AuthService {
   }
 
   logout() {
-    return axios.post(API_URL + "logout")
+    const config= {
+      headers : authHeader()
+    }
+    const bodyParameters = {
+      key: "value"
+   };
+    return axios.post(API_URL + "logout", bodyParameters, config)
     .then(response => {
       if(response.data.status){
         localStorage.removeItem("user");

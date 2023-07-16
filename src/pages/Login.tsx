@@ -1,5 +1,5 @@
-import Case from "../components/Case";
 import { useState } from "react";
+import Case from "../components/Case";
 import reactLogo from "../assets/react.svg";
 import { PasswordInput, Text, Group, TextInput, Button } from "@mantine/core";
 import AuthService from "../services/auth.services";
